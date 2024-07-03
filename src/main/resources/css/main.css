@@ -1,0 +1,8 @@
+.table--general .column-header{ 
+	-fx-background-color:#add1fa; /* Color de fondo de la cabecera */
+    -fx-text-fill: #3d3846; /* Color de la letra de la cabecera */
+    -fx-font-size: 14px; /* Tamaño de la letra de la cabecera */
+    -fx-font-weight: bold; /* Grosor de la letra de la cabecera */
+    -fx-border-width: 0 0.5 0 0; /* Grosor del borde de la cabecera */
+    -fx-border-color: #c0bfbc; /* Color del borde de la cabecera */
+}

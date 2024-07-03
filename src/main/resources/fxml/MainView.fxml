@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<BorderPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="504.0" prefWidth="765.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="practicaDB.controller.MainViewController">
+   <left>
+      <VBox alignment="CENTER" prefHeight="504.0" prefWidth="162.0" spacing="30.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label text="Parking Service">
+               <font>
+                  <Font name="DejaVu Sans Condensed Bold" size="18.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="151.0" fitWidth="139.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/parking.jpg" />
+               </image>
+            </ImageView>
+            <JFXButton onAction="#checkInCar" prefWidth="128.0" text="Check IN" textAlignment="JUSTIFY" textFill="#742dee">
+               <graphic>
+                  <FontIcon iconColor="#742dee" iconLiteral="mdi2c-car-arrow-left" iconSize="22" />
+               </graphic>
+            </JFXButton>
+            <JFXButton onAction="#checkOutCar" prefWidth="128.0" text="Check OUT" textAlignment="JUSTIFY" textFill="#ed4a2d">
+               <graphic>
+                  <FontIcon iconColor="#ed4a2d" iconLiteral="mdi2c-car-arrow-right" iconSize="22" />
+               </graphic>
+            </JFXButton>
+            <JFXButton onAction="#listParkingInfo" prefWidth="128.0" text="Parking info." textAlignment="JUSTIFY" textFill="#b5ab18">
+               <graphic>
+                  <FontIcon iconColor="#b5ab18" iconLiteral="mdi2c-car-info" iconSize="22" />
+               </graphic>
+            </JFXButton>
+            <JFXButton onAction="#ListAllCarInSystem" prefWidth="128.0" text="Listar todos" textAlignment="JUSTIFY" textFill="#b5ab18">
+               <graphic>
+                  <FontIcon iconColor="#b5ab18" iconLiteral="mdi2t-text-box" iconSize="22" />
+               </graphic>
+            </JFXButton>
+         </children>
+      </VBox>
+   </left>
+   <center>
+      <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <TableView fx:id="tableCars" layoutX="20.0" layoutY="49.0" prefHeight="434.0" prefWidth="563.0" styleClass="table--general">
+              <columns>
+                <TableColumn fx:id="tb_col_matricula" prefWidth="107.0" styleClass="tb_column" text="Matricula" />
+                <TableColumn fx:id="tb_col_marca" prefWidth="95.0" styleClass="tb_column" text="Marca" />
+                  <TableColumn fx:id="tb_col_modelo" prefWidth="87.0" styleClass="tb_column" text="Modelo" />
+                  <TableColumn fx:id="tb_col_ckin" prefWidth="136.0" styleClass="tb_column" text="Check IN" />
+                  <TableColumn fx:id="tb_col_ckout" prefWidth="137.0" styleClass="tb_column" text="Check OUT" />
+              </columns>
+            </TableView>
+            <Label fx:id="lb_titulo" alignment="CENTER_RIGHT" layoutX="20.0" layoutY="20.0" nodeOrientation="RIGHT_TO_LEFT" styleClass="lb--titulo" text="Label" textAlignment="RIGHT" />
+         </children>
+      </Pane>
+   </center>
+</BorderPane>

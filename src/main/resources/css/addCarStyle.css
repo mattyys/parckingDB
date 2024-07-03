@@ -1,0 +1,16 @@
+.root {
+	-fx-background-color: #f2f2f2;
+}
+
+.text-input {
+	-fx-background-color: transparent;
+	-fx-border-color: transparent transparent #f2f2f2 transparent;
+	-fx-border-width: 0 0 1 0;
+	-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.1), 1, 0, 0, 1);
+	-fx-font-size: 18px;
+}
+
+.labels {
+	-fx-font-size: 14px;
+	-fx-font-weight: bold;
+}
