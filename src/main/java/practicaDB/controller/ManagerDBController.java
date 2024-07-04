@@ -16,6 +16,8 @@ import practicaDB.dto.CocheDTO;
 import practicaDB.model.Coche;
 
 public class ManagerDBController extends ManagerDbAbstract {
+    
+    protected static final String UPDATE_CAR_IN_PARKING = "UPDATE Coches SET Hora_entrada=?, Hora_salida=? WHERE Matricula=?";
 
     Connection conn = null;
     // de aca inicializa la conexion y la utiliza en los metodos
@@ -166,6 +168,21 @@ public class ManagerDBController extends ManagerDbAbstract {
 	}
 
 	return cochesHoraSalida;
+    }
+    
+    public int updateCarInParcking(CocheDTO cocheDTO) {
+	try (PreparedStatement pstmt = conn.prepareStatement(UPDATE_CAR_IN_PARKING)) {
+	    pstmt.setTimestamp(1, Timestamp.valueOf(cocheDTO.getHoraEntrada().format(DB_TIME_FORMATTER)));
+	    pstmt.setTimestamp(2, null);
+	    pstmt.setString(3, cocheDTO.getMatricula());
+	    pstmt.executeUpdate();
+	    return 1;
+	} catch (SQLException e) {
+	    e.printStackTrace();
+	}
+	
+	
+	return 0;
     }
     
     public String mensajeConeccion() {

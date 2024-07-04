@@ -140,7 +140,7 @@ public class MainViewController implements Initializable {
 	    
 	    Stage stage = new Stage();
 	    stage.setTitle("Check Out Car");
-	    //scene.getStylesheets().add("/css/chkOutCarStyle.css");
+	    scene.getStylesheets().add("/css/checkOutStyle.css");
 	    stage.setScene(scene);
 	    stage.initOwner(root.getScene().getWindow());
 	    stage.initModality(Modality.APPLICATION_MODAL);

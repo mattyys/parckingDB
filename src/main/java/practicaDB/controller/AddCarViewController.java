@@ -1,14 +1,18 @@
 package practicaDB.controller;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import practicaDB.dto.CocheDTO;
+import practicaDB.model.Coche;
 
 public class AddCarViewController {
 
@@ -41,23 +45,69 @@ public class AddCarViewController {
 
 	if (validarDatos()) {
 	    String matricula = tx_matricula.getText();
-	    String marca = tx_marca.getText();
-	    String modelo = tx_modelo.getText();
-	    LocalDateTime ckin = LocalDateTime.now();
-	    // crear un coche
+	    // validara si existe la matricula
+	    CocheDTO cocheDTO = (CocheDTO) managerDBController.search(matricula);
 
-	    CocheDTO coche = new CocheDTO(matricula, marca, modelo, ckin, null);
+	    // queda chequear la ora de salida para saber si esta en el parking
+	    //sii esta en parqking no se puede volver a agregasr si esta en el sistema si.
 
-	    // agregarlo a la base de datos
-	    managerDBController.insert(matricula, coche);
+	    if (cocheDTO != null) {
+		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+		alert.setTitle("Matricula existente");
+		alert.setHeaderText("El coche se encuentra en el sistema");
+		alert.setContentText("Desea ingresarlo al Parking?");
+		Optional<ButtonType> opcion = alert.showAndWait();
 
-	    aviso(true);
-	    // cerrar la ventana
-	    // obtener el stage
-	    Stage stage = (Stage) btn_Agregar.getScene().getWindow();
-	    stage.close();
+		if (opcion.get() == ButtonType.OK) {
+		    LocalDateTime ckin = LocalDateTime.now();
+		    cocheDTO.setMatricula(matricula);
+		    cocheDTO.setHoraEntrada(ckin);
+		    if ((managerDBController.updateCarInParcking(cocheDTO) == 1)) {
+			aviso(true);
+		    }
+		} else {
+		    // limpiar campos
+		    tx_matricula.setText("");
+		    tx_marca.setText("");
+		    tx_modelo.setText("");
+		    tx_matricula.requestFocus();
+		}
+
+	    } else {
+
+		String marca = tx_marca.getText();
+		String modelo = tx_modelo.getText();
+		LocalDateTime ckin = LocalDateTime.now();
+		// crear un coche
+
+		CocheDTO coche = new CocheDTO(matricula, marca, modelo, ckin, null);
+
+		// agregarlo a la base de datos
+		managerDBController.insert(matricula, coche);
+
+		aviso(true);
+		// cerrar la ventana
+		// obtener el stage
+		Stage stage = (Stage) btn_Agregar.getScene().getWindow();
+		stage.close();
+	    }
 	} else {
 	    aviso(false);
+	}
+
+    }
+
+    @FXML
+    void findCarKey(KeyEvent event) {
+	// buscar coche en la base de datos
+	String matricula = tx_matricula.getText();
+	if (managerDBController.search(matricula) != null) {
+	    Coche coche = managerDBController.search(matricula);
+	    tx_marca.setText(coche.getMarca());
+	    tx_modelo.setText(coche.getModelo());
+	} else {
+	    tx_marca.setText("");
+	    tx_modelo.setText("");
 	}
 
     }
@@ -83,7 +133,7 @@ public class AddCarViewController {
 	    Alert alert = new Alert(Alert.AlertType.INFORMATION);
 	    alert.setTitle("Coche agregado");
 	    alert.setHeaderText("Coche agregado correctamente");
-	    alert.setContentText("El coche ha sido agregado correctamente a la base de datos");
+	    alert.setContentText("El coche ha sido agregado correctamente al Parking");
 	    alert.showAndWait();
 	} else {
 	    Alert alert = new Alert(Alert.AlertType.ERROR);

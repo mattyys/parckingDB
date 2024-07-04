@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -9,11 +10,11 @@
 <?import javafx.scene.text.Text?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="168.0" prefWidth="445.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="practicaDB.controller.CheckOutController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="gproot" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="practicaDB.controller.CheckOutController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="221.0" minWidth="10.0" prefWidth="93.0" />
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="374.0" minWidth="10.0" prefWidth="367.0" />
-      <ColumnConstraints hgrow="SOMETIMES" maxWidth="374.0" minWidth="10.0" prefWidth="68.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="374.0" minWidth="10.0" prefWidth="312.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="374.0" minWidth="10.0" prefWidth="50.0" />
   </columnConstraints>
   <rowConstraints>
     <RowConstraints maxHeight="157.0" minHeight="10.0" prefHeight="64.0" vgrow="SOMETIMES" />
@@ -21,13 +22,25 @@
     <RowConstraints maxHeight="160.0" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <TextField fx:id="tx_matricula" promptText="Ingrese Matricula" GridPane.columnIndex="1" GridPane.valignment="CENTER" />
-      <Text fx:id="text_info" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" GridPane.columnSpan="2" GridPane.rowIndex="1" GridPane.valignment="TOP" />
-      <Label alignment="CENTER_RIGHT" text="Matricula" GridPane.halignment="RIGHT" GridPane.valignment="CENTER" />
+      <TextField fx:id="tx_matricula" prefHeight="26.0" prefWidth="312.0" promptText="Ingrese Matricula" styleClass="tx_matricula" GridPane.columnIndex="1">
+         <GridPane.margin>
+            <Insets />
+         </GridPane.margin></TextField>
+      <Text fx:id="text_info" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-info" text="Text" GridPane.columnSpan="2" GridPane.rowIndex="1" GridPane.valignment="TOP">
+         <GridPane.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </GridPane.margin></Text>
+      <Label alignment="CENTER_RIGHT" styleClass="label-matricula" text="Matricula:" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
+         <padding>
+            <Insets right="5.0" />
+         </padding></Label>
       <JFXButton fx:id="btn_checkout" alignment="CENTER" onAction="#onCheckOut" prefHeight="34.0" prefWidth="121.0" text="Check OUT" textFill="#ed4a2d" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
          <graphic>
             <FontIcon iconColor="#ed4a2d" iconLiteral="mdi2c-car-off" iconSize="22" />
          </graphic>
+         <GridPane.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </GridPane.margin>
       </JFXButton>
       <JFXButton fx:id="btn_buscar" onAction="#onBuscarCar" GridPane.columnIndex="2" GridPane.valignment="CENTER">
          <graphic>

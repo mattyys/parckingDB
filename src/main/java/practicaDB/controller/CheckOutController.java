@@ -2,6 +2,7 @@ package practicaDB.controller;
 
 import java.net.URL;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
@@ -50,11 +51,12 @@ public class CheckOutController implements Initializable {
 	    String matricula = tx_matricula.getText();
 	    
 	    Coche coche = managerDBController.search(matricula);
+	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss / dd-MM-yyyy");
 	    
 	    if (coche != null) {
 		text_info.setText("Coche encontrado: \n" +"Matricula: "+ matricula
 			+", Marca: " + coche.getMarca() + ", Modelo: " + coche.getModelo()
-			+ ",\nHora de entrada: " + coche.getHoraEntrada());
+			+ ",\nHora de entrada: " + coche.getHoraEntrada().format(formatter));
 	    } else {
 		text_info.setText("Coche no encontrado");
 	    }
