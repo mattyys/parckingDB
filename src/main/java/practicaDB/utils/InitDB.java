@@ -1,4 +1,4 @@
-package practicaDB;
+package practicaDB.utils;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -12,7 +12,7 @@ import java.util.Optional;
 
 import practicaDB.dto.CocheDTO;
 
-public class TestDB {
+public class InitDB {
 
     private static final String DB = "jdbc:h2:./src/main/resources/database/db_parking";
     private static final String USER = "sa";
