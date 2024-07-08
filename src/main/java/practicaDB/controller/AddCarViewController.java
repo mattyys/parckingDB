@@ -15,30 +15,79 @@ import javafx.stage.Stage;
 import practicaDB.dto.CocheDTO;
 import practicaDB.model.Coche;
 
+
+/**
+ * The Class AddCarViewController.
+ */
 public class AddCarViewController {
 
+    /** The btn agregar. */
     @FXML
     private JFXButton btn_Agregar;
 
+    /** The tx marca. */
     @FXML
     private TextField tx_marca;
 
+    /** The tx matricula. */
     @FXML
     private TextField tx_matricula;
 
+    /** The tx modelo. */
     @FXML
     private TextField tx_modelo;
 
+    /** The manager DB controller. */
     private ManagerDBController managerDBController;
+    
+    /** The coche DTO. */
+    private CocheDTO cocheDTO = null;
+    
+    /** The main view controller. */
+    private MainViewController mainViewController;
 
+    /**
+     * Gets the manager DB controller.
+     *
+     * @return the manager DB controller
+     */
     public ManagerDBController getManagerDBController() {
 	return managerDBController;
     }
 
+    /**
+     * Sets the main view controller.
+     *
+     * @param mainViewController the new main view controller
+     */
+    public void setMainViewController(MainViewController mainViewController) {
+	this.mainViewController = mainViewController;
+    }
+
+    /**
+     * Sets the coche dto.
+     *
+     * @param cocheDTO the new coche dto
+     */
+    public void setCocheDto(CocheDTO cocheDTO) {
+	this.cocheDTO = cocheDTO;
+	updateCoche();
+    }
+
+    /**
+     * Sets the manager DB controller.
+     *
+     * @param managerDBController the new manager DB controller
+     */
     public void setManagerDBController(ManagerDBController managerDBController) {
 	this.managerDBController = managerDBController;
     }
 
+    /**
+     * Adds the car.
+     *
+     * @param event the event
+     */
     @FXML
     void addCar(ActionEvent event) {
 	// obtener los datos de los campos
@@ -65,24 +114,19 @@ public class AddCarViewController {
 			cocheDTO.setHoraEntrada(ckin);
 			if ((managerDBController.updateCarInParcking(cocheDTO) == 1)) {
 			    aviso(true);
+			    volverAMain();
 			}
 		    } else {
 			// limpiar campos
-			tx_matricula.setText("");
-			tx_marca.setText("");
-			tx_modelo.setText("");
-			tx_matricula.requestFocus();
+			limpiarCampos();
 		    }
 		} else {
 		    String msj = "Coche con matricula: " + matricula + " en el parking, Hora:"
 			    + cocheDTO.getHoraEntrada().format(managerDBController.DATE_FORMAT_INFO);
-		    
+
 		    createAlert(AlertType.WARNING, "Coche existente", "El coche se encuentra en el PARKING", msj)
 			    .showAndWait();
-		    tx_matricula.setText("");
-		    tx_marca.setText("");
-		    tx_modelo.setText("");
-		    tx_matricula.requestFocus();
+		    limpiarCampos();
 		}
 
 	    } else {
@@ -95,13 +139,11 @@ public class AddCarViewController {
 		CocheDTO coche = new CocheDTO(matricula, marca, modelo, ckin, null);
 
 		// agregarlo a la base de datos
-		managerDBController.insert(matricula, coche);
+		if (managerDBController.insert(matricula, coche) == 1) {
+		    aviso(true);
 
-		aviso(true);
-		// cerrar la ventana
-		// obtener el stage
-		Stage stage = (Stage) btn_Agregar.getScene().getWindow();
-		stage.close();
+		   volverAMain();
+		}
 	    }
 	} else {
 	    aviso(false);
@@ -109,6 +151,11 @@ public class AddCarViewController {
 
     }
 
+    /**
+     * Find car key.
+     *
+     * @param event the event
+     */
     @FXML
     void findCarKey(KeyEvent event) {
 	// buscar coche en la base de datos
@@ -124,6 +171,11 @@ public class AddCarViewController {
 
     }
 
+    /**
+     * Validar datos.
+     *
+     * @return true, if successful
+     */
     private boolean validarDatos() {
 	if (tx_matricula.getText().isEmpty() || tx_marca.getText().isEmpty() || tx_modelo.getText().isEmpty()) {
 
@@ -140,6 +192,11 @@ public class AddCarViewController {
 	return true;
     }
 
+    /**
+     * Aviso.
+     *
+     * @param correcto the correcto
+     */
     private void aviso(boolean correcto) {
 	if (correcto) {
 	    createAlert(Alert.AlertType.INFORMATION, "Coche agregado", "Coche agregado correctamente",
@@ -150,12 +207,49 @@ public class AddCarViewController {
 	}
     }
 
+    /**
+     * Creates the alert.
+     *
+     * @param type the type
+     * @param title the title
+     * @param header the header
+     * @param content the content
+     * @return the alert
+     */
     private Alert createAlert(Alert.AlertType type, String title, String header, String content) {
 	Alert alert = new Alert(type);
 	alert.setTitle(title);
 	alert.setHeaderText(header);
 	alert.setContentText(content);
 	return alert;
+    }
+
+    /**
+     * Limpiar campos.
+     */
+    private void limpiarCampos() {
+	tx_matricula.setText("");
+	tx_marca.setText("");
+	tx_modelo.setText("");
+	tx_matricula.requestFocus();
+    }
+
+    /**
+     * Update coche.
+     */
+    private void updateCoche() {
+	tx_matricula.setText(cocheDTO.getMatricula());
+	tx_marca.setText(cocheDTO.getMarca());
+	tx_modelo.setText(cocheDTO.getModelo());
+    }
+
+    /**
+     * Volver A main.
+     */
+    private void volverAMain() {
+	Stage stage = (Stage) btn_Agregar.getScene().getWindow();
+	stage.close();
+	mainViewController.updateTableParking();
     }
 
 }

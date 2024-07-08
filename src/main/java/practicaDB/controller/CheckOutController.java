@@ -32,6 +32,17 @@ public class CheckOutController implements Initializable {
     private TextField tx_matricula;
 
     private ManagerDBController managerDBController;
+    private MainViewController mainViewController;
+    
+    private String matriculaPasada = null;
+    
+    public void setMatricula(String matricula) {
+	this.matriculaPasada = matricula;
+	updateTextMatricula();
+    }
+    public void setMainViewController(MainViewController mainViewController) {
+	this.mainViewController = mainViewController;
+    }
 
     public void setManagerDBController(ManagerDBController managerDBController) {
 	this.managerDBController = managerDBController;
@@ -53,6 +64,8 @@ public class CheckOutController implements Initializable {
 	    Coche coche = managerDBController.search(matricula);
 
 	    text_info.setText(setTextInfo(coche, matricula));
+	}else {
+	    createAlert(AlertType.ERROR, "Error", "Faltan datos", "Ingrese una Matricula.").showAndWait();
 	}
     }
 
@@ -83,6 +96,7 @@ public class CheckOutController implements Initializable {
 			text_info.setText("");
 			Stage stage = (Stage) btn_checkout.getScene().getWindow();
 			stage.close();
+			mainViewController.updateTableParking();
 		    } else {
 			text_info.setText("Error al sacar el coche del parking");
 		    }
@@ -146,6 +160,10 @@ public class CheckOutController implements Initializable {
 	}
 
 	return info;
+    }
+    
+    private void updateTextMatricula() {
+	tx_matricula.setText(matriculaPasada);
     }
 
 }

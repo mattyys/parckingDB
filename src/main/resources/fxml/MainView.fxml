@@ -16,7 +16,7 @@
    <left>
       <VBox alignment="CENTER" prefHeight="504.0" prefWidth="162.0" spacing="30.0" BorderPane.alignment="CENTER">
          <children>
-            <Label text="Parking Service">
+            <Label styleClass="lb--logo" text="Parking Service">
                <font>
                   <Font name="DejaVu Sans Condensed Bold" size="18.0" />
                </font>

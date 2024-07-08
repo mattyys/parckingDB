@@ -20,11 +20,10 @@ public class ManagerDBController extends ManagerDbAbstract {
     protected static final String UPDATE_CAR_IN_PARKING = "UPDATE Coches SET Hora_entrada=?, Hora_salida=? WHERE Matricula=?";
 
     Connection conn = null;
-    // de aca inicializa la conexion y la utiliza en los metodos
     private final DateTimeFormatter DB_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
     public final DateTimeFormatter DATE_FORMAT_INFO = DateTimeFormatter.ofPattern("HH:mm:ss / dd-MM-yyyy");
 
+    // de aca inicializa la conexion y la utiliza en los metodos
     public ManagerDBController() {
 	try {
 	    conn = super.iniConexion();

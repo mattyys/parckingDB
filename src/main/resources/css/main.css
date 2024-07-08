@@ -6,3 +6,15 @@
     -fx-border-width: 0 0.5 0 0; /* Grosor del borde de la cabecera */
     -fx-border-color: #c0bfbc; /* Color del borde de la cabecera */
 }
+
+.lb--titulo{
+	-fx-text-fill: #1c4600;
+    -fx-font-size: 16;
+    -fx-font-style: italic;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+}
+.lb--logo{
+    -fx-text-fill: #1f0042;
+    -fx-font-size: 22;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+}
