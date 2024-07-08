@@ -22,7 +22,7 @@
     <RowConstraints maxHeight="160.0" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <TextField fx:id="tx_matricula" prefHeight="26.0" prefWidth="312.0" promptText="Ingrese Matricula" styleClass="tx_matricula" GridPane.columnIndex="1">
+      <TextField fx:id="tx_matricula" onKeyReleased="#findCarKey" prefHeight="26.0" prefWidth="312.0" promptText="Ingrese Matricula" styleClass="tx_matricula" GridPane.columnIndex="1">
          <GridPane.margin>
             <Insets />
          </GridPane.margin></TextField>

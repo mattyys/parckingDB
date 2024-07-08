@@ -7,6 +7,7 @@ import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
@@ -49,15 +50,14 @@ public class AddCarViewController {
 	    CocheDTO cocheDTO = (CocheDTO) managerDBController.search(matricula);
 
 	    // queda chequear la ora de salida para saber si esta en el parking
-	    //sii esta en parqking no se puede volver a agregasr si esta en el sistema si.
+	    // sii esta en parqking no se puede volver a agregasr si esta en el sistema si.
 
 	    if (cocheDTO != null) {
-		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-		alert.setTitle("Matricula existente");
-		alert.setHeaderText("El coche se encuentra en el sistema");
-		alert.setContentText("Desea ingresarlo al Parking?");
-		Optional<ButtonType> opcion = alert.showAndWait();
-
+		
+		Optional<ButtonType> opcion = createAlert(AlertType.INFORMATION, "Coche existente",
+			"El coche ya se encuentra en el sistema", "El coche ya se encuentra en el sistema")
+			.showAndWait();
+		
 		if (opcion.get() == ButtonType.OK) {
 		    LocalDateTime ckin = LocalDateTime.now();
 		    cocheDTO.setMatricula(matricula);
@@ -130,18 +130,20 @@ public class AddCarViewController {
 
     private void aviso(boolean correcto) {
 	if (correcto) {
-	    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-	    alert.setTitle("Coche agregado");
-	    alert.setHeaderText("Coche agregado correctamente");
-	    alert.setContentText("El coche ha sido agregado correctamente al Parking");
-	    alert.showAndWait();
+	    createAlert(Alert.AlertType.INFORMATION, "Coche agregado", "Coche agregado correctamente",
+		    "El coche ha sido agregado correctamente al Parking").showAndWait();
 	} else {
-	    Alert alert = new Alert(Alert.AlertType.ERROR);
-	    alert.setTitle("Faltan datos");
-	    alert.setHeaderText("Error al agregar coche");
-	    alert.setContentText("Todos los campos son obligatorios");
-	    alert.showAndWait();
+	    createAlert(AlertType.ERROR, "Faltan datos", "Error al agregar coche", "Todos los campos son obligatorios")
+		    .showAndWait();
 	}
+    }
+
+    private Alert createAlert(Alert.AlertType type, String title, String header, String content) {
+	Alert alert = new Alert(type);
+	alert.setTitle(title);
+	alert.setHeaderText(header);
+	alert.setContentText(content);
+	return alert;
     }
 
 }
