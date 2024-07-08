@@ -53,20 +53,32 @@ public class AddCarViewController {
 	    // sii esta en parqking no se puede volver a agregasr si esta en el sistema si.
 
 	    if (cocheDTO != null) {
-		
-		Optional<ButtonType> opcion = createAlert(AlertType.INFORMATION, "Coche existente",
-			"El coche ya se encuentra en el sistema", "El coche ya se encuentra en el sistema")
-			.showAndWait();
-		
-		if (opcion.get() == ButtonType.OK) {
-		    LocalDateTime ckin = LocalDateTime.now();
-		    cocheDTO.setMatricula(matricula);
-		    cocheDTO.setHoraEntrada(ckin);
-		    if ((managerDBController.updateCarInParcking(cocheDTO) == 1)) {
-			aviso(true);
+
+		if (cocheDTO.getHoraSalida() != null) {
+		    Optional<ButtonType> opcion = createAlert(AlertType.CONFIRMATION, "Coche existente",
+			    "El coche se encuentra en el sistema", "Agregar al parking?").showAndWait();
+
+		    if (opcion.get() == ButtonType.OK) {
+			// volver a agregar coche al parking
+			LocalDateTime ckin = LocalDateTime.now();
+			cocheDTO.setMatricula(matricula);
+			cocheDTO.setHoraEntrada(ckin);
+			if ((managerDBController.updateCarInParcking(cocheDTO) == 1)) {
+			    aviso(true);
+			}
+		    } else {
+			// limpiar campos
+			tx_matricula.setText("");
+			tx_marca.setText("");
+			tx_modelo.setText("");
+			tx_matricula.requestFocus();
 		    }
 		} else {
-		    // limpiar campos
+		    String msj = "Coche con matricula: " + matricula + " en el parking, Hora:"
+			    + cocheDTO.getHoraEntrada().format(managerDBController.DATE_FORMAT_INFO);
+		    
+		    createAlert(AlertType.WARNING, "Coche existente", "El coche se encuentra en el PARKING", msj)
+			    .showAndWait();
 		    tx_matricula.setText("");
 		    tx_marca.setText("");
 		    tx_modelo.setText("");
@@ -101,8 +113,8 @@ public class AddCarViewController {
     void findCarKey(KeyEvent event) {
 	// buscar coche en la base de datos
 	String matricula = tx_matricula.getText();
-	if (managerDBController.search(matricula) != null) {
-	    Coche coche = managerDBController.search(matricula);
+	Coche coche = null;
+	if ((coche = managerDBController.search(matricula)) != null) {
 	    tx_marca.setText(coche.getMarca());
 	    tx_modelo.setText(coche.getModelo());
 	} else {

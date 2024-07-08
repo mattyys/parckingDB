@@ -2,7 +2,6 @@ package practicaDB.controller;
 
 import java.net.URL;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
@@ -31,8 +30,6 @@ public class CheckOutController implements Initializable {
 
     @FXML
     private TextField tx_matricula;
-
-    private final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("HH:mm:ss / dd-MM-yyyy");
 
     private ManagerDBController managerDBController;
 
@@ -101,8 +98,11 @@ public class CheckOutController implements Initializable {
     @FXML
     void findCarKey(KeyEvent event) {
 	String matricula = tx_matricula.getText();
-	if (managerDBController.search(matricula) != null) {
-	    Coche coche = managerDBController.search(matricula);
+	Coche coche = null;
+	if ((coche = managerDBController.search(matricula)) != null) {
+	    text_info.setText(setTextInfo(coche, matricula));
+	} else {
+	    text_info.setText("");
 	}
 
     }
@@ -140,7 +140,7 @@ public class CheckOutController implements Initializable {
 
 	if (coche != null) {
 	    info = "Coche encontrado: \n" + "Matricula: " + matricula + ", Marca: " + coche.getMarca() + ", Modelo: "
-		    + coche.getModelo() + ",\nHora de entrada: " + coche.getHoraEntrada().format(FORMATTER);
+		    + coche.getModelo() + ",\nHora de entrada: " + coche.getHoraEntrada().format(managerDBController.DATE_FORMAT_INFO);
 	} else {
 	    info = "Coche no encontrado";
 	}

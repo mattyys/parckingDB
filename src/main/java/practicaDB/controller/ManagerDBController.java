@@ -23,6 +23,8 @@ public class ManagerDBController extends ManagerDbAbstract {
     // de aca inicializa la conexion y la utiliza en los metodos
     private final DateTimeFormatter DB_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
+    public final DateTimeFormatter DATE_FORMAT_INFO = DateTimeFormatter.ofPattern("HH:mm:ss / dd-MM-yyyy");
+
     public ManagerDBController() {
 	try {
 	    conn = super.iniConexion();
