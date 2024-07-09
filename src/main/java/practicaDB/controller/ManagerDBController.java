@@ -15,14 +15,27 @@ import practicaDB.db.ManagerDbAbstract;
 import practicaDB.dto.CocheDTO;
 import practicaDB.model.Coche;
 
+
+/**
+ * The Class ManagerDBController.
+ */
 public class ManagerDBController extends ManagerDbAbstract {
-    
+
+    /** The Constant UPDATE_CAR_IN_PARKING. */
     protected static final String UPDATE_CAR_IN_PARKING = "UPDATE Coches SET Hora_entrada=?, Hora_salida=? WHERE Matricula=?";
 
+    /** The conn. */
     Connection conn = null;
+    
+    /** The db time formatter. */
     private final DateTimeFormatter DB_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    
+    /** The date format info. */
     public final DateTimeFormatter DATE_FORMAT_INFO = DateTimeFormatter.ofPattern("HH:mm:ss / dd-MM-yyyy");
 
+    /**
+     * Instantiates a new manager DB controller.
+     */
     // de aca inicializa la conexion y la utiliza en los metodos
     public ManagerDBController() {
 	try {
@@ -33,6 +46,9 @@ public class ManagerDBController extends ManagerDbAbstract {
 	}
     }
 
+    /**
+     * Close connection.
+     */
     public void closeConnection() {
 	try {
 	    conn.close();
@@ -60,6 +76,7 @@ public class ManagerDBController extends ManagerDbAbstract {
 	return 0;
     }
 
+  
     @Override
     public int insert(String matricula, Coche coche) {
 	// TODO Auto-generated method stub
@@ -82,6 +99,7 @@ public class ManagerDBController extends ManagerDbAbstract {
 	return 0;
     }
 
+ 
     @Override
     public Coche search(String matricula) {
 	// TODO Auto-generated method stub
@@ -110,6 +128,7 @@ public class ManagerDBController extends ManagerDbAbstract {
 	return coche;
     }
 
+   
     @Override
     public Map<String, Coche> searchAll() {
 	Map<String, Coche> cochesAll = new HashMap<String, Coche>();
@@ -140,6 +159,7 @@ public class ManagerDBController extends ManagerDbAbstract {
 	return cochesAll;
     }
 
+   
     @Override
     public Map<String, Coche> searchAllFilterHoraSalida() {
 	// TODO Auto-generated method stub
@@ -170,7 +190,18 @@ public class ManagerDBController extends ManagerDbAbstract {
 
 	return cochesHoraSalida;
     }
-    
+
+    /**
+     * Update car in parcking.
+     * 
+     * <p>
+     * Actualiza la hora de entrada y salida del parking de un coche que ya ha
+     * salido del parking pero que queda en sistema
+     * </p>
+     * 
+     * @param cocheDTO the coche DTO
+     * @return the int
+     */
     public int updateCarInParcking(CocheDTO cocheDTO) {
 	try (PreparedStatement pstmt = conn.prepareStatement(UPDATE_CAR_IN_PARKING)) {
 	    pstmt.setTimestamp(1, Timestamp.valueOf(cocheDTO.getHoraEntrada().format(DB_TIME_FORMATTER)));
@@ -181,11 +212,18 @@ public class ManagerDBController extends ManagerDbAbstract {
 	} catch (SQLException e) {
 	    e.printStackTrace();
 	}
-	
-	
+
 	return 0;
     }
-    
+
+    /**
+     * Mensaje coneccion.
+     * <p>
+     * Mensaje de aviso de coneccion a ManagerDBController
+     * </p>
+     *
+     * @return the string
+     */
     public String mensajeConeccion() {
 	return "Conectado a ManagerDBController...";
     }

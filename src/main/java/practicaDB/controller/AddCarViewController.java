@@ -39,10 +39,10 @@ public class AddCarViewController {
 
     /** The manager DB controller. */
     private ManagerDBController managerDBController;
-    
+
     /** The coche DTO. */
     private CocheDTO cocheDTO = null;
-    
+
     /** The main view controller. */
     private MainViewController mainViewController;
 
@@ -85,24 +85,32 @@ public class AddCarViewController {
 
     /**
      * Adds the car.
+     * <p>
+     * Sera llamado cuando se presione el boton de Agregar
+     * </p>
+     * <p>
+     * Se validara que los campos esten completos, si la matricula ya existe se
+     * preguntara si se quiere agregar nuevamente al parking, si ya esta en el
+     * parking se da aviso y se limpiaran los campos para ingresar una nueva
+     * matricula, si no existe se creara un nuevo coche y se agregara a la base de
+     * datos
+     * </p>
      *
      * @param event the event
      */
     @FXML
     void addCar(ActionEvent event) {
-	// obtener los datos de los campos
-	System.out.println(managerDBController.mensajeConeccion());
 
+	// se validan que esten todos los campos completos
 	if (validarDatos()) {
 	    String matricula = tx_matricula.getText();
 	    // validara si existe la matricula
 	    CocheDTO cocheDTO = (CocheDTO) managerDBController.search(matricula);
 
-	    // queda chequear la ora de salida para saber si esta en el parking
-	    // sii esta en parqking no se puede volver a agregasr si esta en el sistema si.
-
+	    // verifica si el coche existe
 	    if (cocheDTO != null) {
 
+		// verifica si el coche ya esta en el sistema
 		if (cocheDTO.getHoraSalida() != null) {
 		    Optional<ButtonType> opcion = createAlert(AlertType.CONFIRMATION, "Coche existente",
 			    "El coche se encuentra en el sistema", "Agregar al parking?").showAndWait();
@@ -121,11 +129,11 @@ public class AddCarViewController {
 			limpiarCampos();
 		    }
 		} else {
-		    String msj = "Coche con matricula: " + matricula + " en el parking, Hora:"
+		    String msjCocheEnParking = "Coche con matricula: " + matricula + " en el parking, Hora:"
 			    + cocheDTO.getHoraEntrada().format(managerDBController.DATE_FORMAT_INFO);
 
-		    createAlert(AlertType.WARNING, "Coche existente", "El coche se encuentra en el PARKING", msj)
-			    .showAndWait();
+		    createAlert(AlertType.WARNING, "Coche existente", "El coche se encuentra en el PARKING",
+			    msjCocheEnParking).showAndWait();
 		    limpiarCampos();
 		}
 
@@ -140,9 +148,9 @@ public class AddCarViewController {
 
 		// agregarlo a la base de datos
 		if (managerDBController.insert(matricula, coche) == 1) {
-		    aviso(true);
 
-		   volverAMain();
+		    aviso(true);
+		    volverAMain();
 		}
 	    }
 	} else {
@@ -153,6 +161,14 @@ public class AddCarViewController {
 
     /**
      * Find car key.
+     * 
+     * <p>
+     * Sera llamado cuando se presione una tecla en el campo de matricula
+     * </p>
+     * <p>
+     * Con cada tecla presionada en el campo de matricula se busca la coincidencia
+     * en la base de datos
+     * </p>
      *
      * @param event the event
      */
@@ -173,6 +189,9 @@ public class AddCarViewController {
 
     /**
      * Validar datos.
+     * <p>
+     * Metodo para validar los campos de la ventana
+     * </p>
      *
      * @return true, if successful
      */
@@ -194,6 +213,10 @@ public class AddCarViewController {
 
     /**
      * Aviso.
+     * <p>
+     * Metodo para mostrar un mensaje de alerta, recibe un booleano para saber si el
+     * coche fue agregado correctamente o no
+     * </p>
      *
      * @param correcto the correcto
      */
@@ -209,10 +232,14 @@ public class AddCarViewController {
 
     /**
      * Creates the alert.
+     * <p>
+     * Alerta personalizada, recibe el tipo de alerta, el titulo, el header y el
+     * contenido
+     * </p>
      *
-     * @param type the type
-     * @param title the title
-     * @param header the header
+     * @param type    the type
+     * @param title   the title
+     * @param header  the header
      * @param content the content
      * @return the alert
      */
@@ -226,6 +253,10 @@ public class AddCarViewController {
 
     /**
      * Limpiar campos.
+     * <p>
+     * Limpia los campos de la ventana y coloca el foco en el primer campo a
+     * completar
+     * </p>
      */
     private void limpiarCampos() {
 	tx_matricula.setText("");
@@ -236,6 +267,10 @@ public class AddCarViewController {
 
     /**
      * Update coche.
+     * <p>
+     * Metodo para actualizar los campos de la ventana con los datos del coche que
+     * fue seleccionado en el la vista principal
+     * </p>
      */
     private void updateCoche() {
 	tx_matricula.setText(cocheDTO.getMatricula());
@@ -245,6 +280,10 @@ public class AddCarViewController {
 
     /**
      * Volver A main.
+     * <p>
+     * Metodo para cerrar la ventana y volver a la ventana principal actualizando la
+     * lista del parking
+     * </p>
      */
     private void volverAMain() {
 	Stage stage = (Stage) btn_Agregar.getScene().getWindow();

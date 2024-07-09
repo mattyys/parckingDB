@@ -9,12 +9,24 @@ import practicaDB.dto.CocheDTO;
 import practicaDB.model.Parking;
 
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class App.
+ */
 public class App {
 
+	/** The manager DB controller. */
 	private static ManagerDBController managerDBController = new ManagerDBController();
+	
+	/** The parking. */
 	private static Parking parking = new Parking(managerDBController);
 	//private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		boolean salir = false;
 		int opcionMenu;
@@ -64,7 +76,7 @@ public class App {
 	}
 
 	/**
-	 * Metodo que pinta el menu principal
+	 * Metodo que pinta el menu principal.
 	 */
 	public static void pintarMenu() {
 		System.out.println();
@@ -78,8 +90,9 @@ public class App {
 	}
 
 	/**
-	 * Metodo que registra la entrada de coches en el parking siempre y cuando no existe un coche dentro de este (horaSalida = null)
-	 * @param sc
+	 * Metodo que registra la entrada de coches en el parking siempre y cuando no existe un coche dentro de este (horaSalida = null).
+	 *
+	 * @param sc the sc
 	 */
 	public static void registrarEntradaCoche(final Scanner sc) {
 
@@ -108,9 +121,10 @@ public class App {
 	}
 
 	/**
-	 * Metodo que registra la salida de un coche dando valor a la hora de salida
-	 * @param sc
-	 * @return
+	 * Metodo que registra la salida de un coche dando valor a la hora de salida.
+	 *
+	 * @param sc the sc
+	 * @return the string
 	 */
 	public static String registrarSalidaCoche(final Scanner sc) {
 		String matricula = null;

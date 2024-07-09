@@ -9,8 +9,17 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class AppFx.
+ */
 public class AppFx extends Application {
 
+    /**
+     * Start.
+     *
+     * @param primaryStage the primary stage
+     */
     @Override
     public void start(Stage primaryStage) {
 	URL url = getClass().getResource("/fxml/MainView.fxml");
@@ -45,6 +54,11 @@ public class AppFx extends Application {
 
     }
 
+    /**
+     * The main method.
+     *
+     * @param args the arguments
+     */
     public static void main(String[] args) {
 	launch(args);
     }

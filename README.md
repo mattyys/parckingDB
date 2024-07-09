@@ -1,5 +1,7 @@
-# ParckingDB
-Este repositorio contiene un parcking de coches y se gestiona con una base de datos 2, vistas en javaFX
-## Descarga de Repositorio
+# ParkingDB
+Este repositorio es de un sistema de Parking de coches, se maneja con una base de datos embebida H2 y la vista con JavaFx
+## Clonar Repositorio
+
+
 
 

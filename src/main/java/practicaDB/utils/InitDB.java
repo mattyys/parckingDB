@@ -12,10 +12,19 @@ import java.util.Optional;
 
 import practicaDB.dto.CocheDTO;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class InitDB.
+ */
 public class InitDB {
 
+    /** The Constant DB. */
     private static final String DB = "jdbc:h2:./src/main/resources/database/db_parking";
+    
+    /** The Constant USER. */
     private static final String USER = "sa";
+    
+    /** The Constant PASS. */
     private static final String PASS = "sa";
 //    private static final String FIRST_QUERY = "DROP TABLE IF EXISTS COCHES;\n"
 //    	+ "CREATE TABLE COCHES (\n"
@@ -40,7 +49,12 @@ public class InitDB {
 //    	+ "('aa99','Toyota','Corolla','2024-06-26 15:20:00',NULL),\n"
 //    	+ "('aa00','Hyundai','i30','2024-06-26 15:30:00',NULL);";
 
-    public static void main(String[] args) {
+    /**
+ * The main method.
+ *
+ * @param args the arguments
+ */
+public static void main(String[] args) {
 	// TODO Auto-generated method stub
 	
 	Map<String,CocheDTO> coches = new HashMap<>();
