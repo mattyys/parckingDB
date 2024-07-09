@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"practicaDB"},{"l":"practicaDB.controller"},{"l":"practicaDB.db"},{"l":"practicaDB.dto"},{"l":"practicaDB.model"},{"l":"practicaDB.utils"}];updateSearchResults();
